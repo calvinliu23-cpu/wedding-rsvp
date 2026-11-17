@@ -72,13 +72,6 @@ body {
 [hidden] { display: none !important; }
 .sr { position: absolute; left: -9999px; }
 
-/* 主辦人切換列 */
-.modebar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: var(--soft); border-radius: 8px; padding: 8px 8px 8px 16px; }
-.modebar span { font-weight: 700; color: var(--muted); font-size: 14px; letter-spacing: 0.1em; }
-.seg { display: flex; gap: 4px; }
-.seg button { font: 500 14px/1 var(--sans); padding: 10px 14px; border-radius: 6px; border: 0; background: transparent; color: var(--fg); cursor: pointer; }
-.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-fg); font-weight: 700; }
-
 /* 封面 */
 .cover { position: relative; background: var(--cover); color: var(--on-cover); text-align: center; border-radius: 6px; overflow: hidden; }
 .cover-img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
@@ -107,11 +100,6 @@ body {
 .cd-note { margin: 22px 0 0; font: 700 18px/1.4 var(--serif); letter-spacing: 0.1em; color: var(--gold-on-cover); }
 .mapbar { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
 a.btn { text-decoration: none; text-align: center; }
-.seatcard { text-align: center; }
-.seatcard .big { font: 900 44px/1.2 var(--serif); color: var(--gold); margin: 6px 0 8px; overflow-wrap: anywhere; }
-.card .blk h3 { margin: 0 0 6px; }
-.blk + .blk { border-top: 1px dashed var(--line); margin-top: 18px; padding-top: 18px; }
-.blkbody { margin: 0; white-space: pre-line; overflow-wrap: anywhere; }
 
 /* 卡片與表單 */
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 24px 20px; }
@@ -122,7 +110,6 @@ a.btn { text-decoration: none; text-align: center; }
 .field > label, .field > .lbl, .lbl { font-weight: 700; font-size: 15px; }
 .req { color: var(--danger); }
 .hint { color: var(--muted); font-size: 13px; margin-top: -2px; }
-.opt { color: var(--muted); font-weight: 400; font-size: 13px; margin-left: 6px; }
 input[type="text"], input[type="number"], textarea, select {
   width: 100%;
   font: inherit;
@@ -136,7 +123,6 @@ input[type="text"], input[type="number"], textarea, select {
 textarea { min-height: 88px; resize: vertical; }
 input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-.qimg { max-width: 100%; border-radius: 6px; display: block; }
 
 .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
 .choice { position: relative; }
@@ -159,9 +145,6 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
 .btn:disabled { opacity: 0.55; cursor: default; }
 .btn.small { width: auto; padding: 11px 16px; font-size: 15px; letter-spacing: 0.06em; display: inline-block; text-align: center; }
 .btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); letter-spacing: 0.08em; }
-.btn.danger { background: transparent; color: var(--danger); border: 1px solid var(--danger); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .btn.ghost { color: var(--gold); border-color: var(--gold); } }
-:root[data-theme="dark"] .btn.ghost { color: var(--gold); border-color: var(--gold); }
 .err { color: var(--danger); font-size: 14px; min-height: 1.4em; margin: 0 0 8px; }
 
 /* 回覆確認 */
@@ -171,64 +154,11 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
 .actions { display: grid; gap: 10px; }
 .flash { text-align: center; color: var(--ok); font-size: 14px; min-height: 1.4em; margin: 8px 0 0; }
 .foot { text-align: center; color: var(--muted); font-size: 13px; margin: 0; }
-
-/* 後台 */
-.tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 2px; }
-.tabs button { flex: none; font: 500 15px/1 var(--sans); padding: 12px 16px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--fg); cursor: pointer; }
-.tabs button[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); font-weight: 700; }
-.toolbar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 16px; }
-.toolbar select { width: auto; }
-.note { color: var(--muted); font-size: 14px; margin: 0 0 16px; }
-.msg-err { color: var(--danger); font-size: 14px; margin: 8px 0 0; }
-.qcard { border: 1px solid var(--line); border-radius: 8px; padding: 16px; margin-bottom: 14px; background: var(--bg); }
-.qhead { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
-.qhead .qno { font-weight: 700; color: var(--gold); margin-right: auto; }
-.qhead select { width: auto; padding: 8px 10px; font-size: 14px; }
-.qhead button { font: 500 14px/1 var(--sans); padding: 9px 12px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--fg); cursor: pointer; }
-.qhead button.danger { color: var(--danger); border-color: var(--danger); }
-.pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-.chk { display: flex; align-items: center; gap: 8px; font-weight: 500; }
-.chk input { width: 18px; height: 18px; accent-color: var(--accent); }
-.thumbs { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 10px; margin-bottom: 12px; }
-.thumb { display: grid; gap: 6px; }
-.thumb img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; background: var(--soft); display: block; }
-.thumb button { font: 500 13px/1 var(--sans); padding: 8px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--danger); cursor: pointer; }
-.upl { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
-.upl input[type="file"] { position: absolute; left: -9999px; }
-.savebar { position: sticky; bottom: 0; z-index: 5; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px)); }
-.savebar span { font-size: 14px; color: var(--muted); }
-.savebar span.warn { color: var(--danger); }
-.savebar span.good { color: var(--ok); }
-
-.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-bottom: 16px; }
-.tile { background: var(--soft); border-radius: 6px; padding: 12px 14px; }
-.tile b { display: block; font: 700 26px/1.2 var(--serif); font-variant-numeric: tabular-nums; }
-.tile span { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
-.stat { background: var(--soft); border-radius: 6px; padding: 12px 14px; }
-.stat b { display: block; font-size: 14px; margin-bottom: 6px; overflow-wrap: anywhere; }
-.stat div { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; }
-.stat div span:last-child { font-variant-numeric: tabular-nums; font-weight: 700; }
-.scroller { overflow-x: auto; }
-table { border-collapse: collapse; width: 100%; font-size: 14px; }
-th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; overflow-wrap: anywhere; }
-th { color: var(--muted); font-weight: 500; }
-.empty { color: var(--muted); margin: 0; }
-@media (prefers-reduced-motion: no-preference) {
-  .btn, .choice span, .seg button { transition: background 0.15s, border-color 0.15s; }
-}
 </style>
 </head>
 <body>
 
 <main class="wrap">
-  <nav class="modebar" id="modebar" hidden aria-label="主辦人模式">
-    <span>主辦人</span>
-    <div class="seg">
-      <button type="button" id="mode-admin" aria-pressed="false">後台管理</button>
-      <button type="button" id="mode-front" aria-pressed="true">前台預覽</button>
-    </div>
-  </nav>
-
   <div id="front">
     <header class="cover" id="cover">
       <img class="cover-img" id="cover-img" alt="" hidden>
@@ -249,11 +179,6 @@ th { color: var(--muted); font-weight: 500; }
     <div class="mapbar" id="mapbar" hidden></div>
     <section class="card" id="blocks" hidden></section>
     <div class="gallery" id="gallery" hidden></div>
-    <section class="card seatcard" id="seat-card" aria-labelledby="seat-title" hidden>
-      <h2 id="seat-title">您的座位</h2>
-      <p class="big" id="seat-no"></p>
-      <p class="sub" style="margin:0">請依桌卡入座，找不到座位時可詢問現場服務人員。</p>
-    </section>
 
     <section class="card" id="form-card" aria-labelledby="form-title">
       <h2 id="form-title"></h2>
@@ -278,59 +203,16 @@ th { color: var(--muted); font-weight: 500; }
 
     <p class="foot" id="foot"></p>
   </div>
-
-  <div id="admin" hidden>
-    <div class="tabs" role="tablist" aria-label="後台分頁">
-      <button type="button" role="tab" id="tab-basic" data-tab="basic" aria-selected="true">基本資料</button>
-      <button type="button" role="tab" id="tab-info" data-tab="info" aria-selected="false">交通與資訊</button>
-      <button type="button" role="tab" id="tab-img" data-tab="img" aria-selected="false">圖片</button>
-      <button type="button" role="tab" id="tab-q" data-tab="q" aria-selected="false">問題</button>
-      <button type="button" role="tab" id="tab-resp" data-tab="resp" aria-selected="false">回覆</button>
-    </div>
-    <section class="card" id="p-basic" role="tabpanel"></section>
-    <section class="card" id="p-info" role="tabpanel" hidden></section>
-    <section class="card" id="p-img" role="tabpanel" hidden></section>
-    <section class="card" id="p-q" role="tabpanel" hidden></section>
-    <section class="card" id="p-resp" role="tabpanel" hidden></section>
-    <div class="savebar" id="savebar">
-      <span id="save-msg">所有修改都已發布</span>
-      <button class="btn small" type="button" id="save" disabled>儲存並發布</button>
-    </div>
-  </div>
 </main>
 
 <script>
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
-  var clone = function (o) { return JSON.parse(JSON.stringify(o)); };
-  // 圖片直接使用同目錄下的檔名
   var blobUrl = function (id) { return id; };
-  var TYPES = { text: "單行文字", longtext: "多行文字", number: "數字", single: "單選", multi: "複選" };
 
-  function h(tag, props) {
-    var el = document.createElement(tag);
-    props = props || {};
-    Object.keys(props).forEach(function (k) {
-      var v = props[k];
-      if (v === false || v == null) return;
-      if (k === "text") el.textContent = v;
-      else if (k === "class") el.className = v;
-      else if (k.slice(0, 2) === "on") el.addEventListener(k.slice(2), v);
-      else if (v === true) el.setAttribute(k, "");
-      else el.setAttribute(k, v);
-    });
-    for (var i = 2; i < arguments.length; i++) {
-      var c = arguments[i];
-      if (c == null || c === false) continue;
-      el.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
-    }
-    return el;
-  }
-
-  // ---------- 預設內容（已帶入婚紗照）----------
-  var DEFAULT_CFG = {
-    v: 1,
+  // ---------- 預設內容與新增的表單問題設定 ----------
+  var cfg = {
     event: {
       names: "劉錦鴻（村村） & 洪晨茗",
       lead: "Welcome to our wedding!\n我們要結婚了，歡迎來參加我們的婚禮，與我們共享喜宴。",
@@ -359,16 +241,35 @@ th { color: var(--muted); font-weight: 500; }
       { id: "q_phone", type: "text", label: "聯絡電話", hint: "選填", required: false },
       { id: "q_side", type: "single", label: "您是哪一方的賓客？", hint: "", required: false, options: ["新郎方（錦鴻／村村）", "新娘方（晨茗）"] },
       { id: "q_att", type: "single", label: "是否出席？", hint: "", required: true, options: ["歡喜出席", "無法出席"] },
-      { id: "q_adults", type: "number", label: "成人人數", hint: "含您本人", required: true, min: 1, max: 10, showIf: { q: "q_att", eq: "歡喜出席" } },
-      { id: "q_kids", type: "number", label: "兒童人數", hint: "12 歲以下，需要兒童椅請計入", required: false, min: 0, max: 6, showIf: { q: "q_att", eq: "歡喜出席" } },
-      { id: "q_veg", type: "number", label: "素食人數", hint: "含在上述人數內", required: false, min: 0, max: 16, showIf: { q: "q_att", eq: "歡喜出席" } },
-      { id: "q_diet", type: "text", label: "飲食禁忌", hint: "例如：不吃牛、海鮮過敏", required: false, showIf: { q: "q_att", eq: "歡喜出席" } },
-      { id: "q_msg", type: "longtext", label: "給新人的話", hint: "寫下您的祝福", required: false }
+      { id: "q_adults", type: "number", label: "出席的「成人」人數", hint: "含您本人", required: true, min: 1, max: 10, showIf: { q: "q_att", eq: "歡喜出席" } },
+      { id: "q_kids", type: "number", label: "出席的「兒童」人數", hint: "12 歲以下，需要兒童椅請計入", required: false, min: 0, max: 6, showIf: { q: "q_att", eq: "歡喜出席" } },
+      { id: "q_veg", type: "number", label: "是否準備素食？需要幾份呢？", hint: "含在上述人數內", required: false, min: 0, max: 10, showIf: { q: "q_att", eq: "歡喜出席" } },
+      { id: "q_address", type: "longtext", label: "請提供您的收件資料，讓我們寄喜帖給您", hint: "收件人 / 地址 / 電話", required: false },
+      { id: "q_msg", type: "longtext", label: "希望您給我們一些祝福....", hint: "寫下您的祝福", required: false }
     ]
   };
 
-  var cfg = DEFAULT_CFG;
   var ans = {};
+
+  function h(tag, props) {
+    var el = document.createElement(tag);
+    props = props || {};
+    Object.keys(props).forEach(function (k) {
+      var v = props[k];
+      if (v === false || v == null) return;
+      if (k === "text") el.textContent = v;
+      else if (k === "class") el.className = v;
+      else if (k.slice(0, 2) === "on") el.addEventListener(k.slice(2), v);
+      else if (v === true) el.setAttribute(k, "");
+      else el.setAttribute(k, v);
+    });
+    for (var i = 2; i < arguments.length; i++) {
+      var c = arguments[i];
+      if (c == null || c === false) continue;
+      el.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    }
+    return el;
+  }
 
   function renderForm() {
     var box = $("qs");
@@ -421,24 +322,12 @@ th { color: var(--muted); font-weight: 500; }
     } else {
       var g = h("div", { class: "choices", role: q.type === "single" ? "radiogroup" : "group", "aria-labelledby": lblId });
       q.options.forEach(function (o, i) {
-        var multi = q.type === "multi";
-        var ci = h("input", { type: multi ? "checkbox" : "radio", name: "q-" + q.id, id: "q-" + q.id + "-" + i, value: o });
-        if (multi) {
-          ci.checked = Array.isArray(ans[q.id]) && ans[q.id].indexOf(o) >= 0;
-          ci.addEventListener("change", function () {
-            var cur = Array.isArray(ans[q.id]) ? ans[q.id].slice() : [];
-            var at = cur.indexOf(o);
-            if (ci.checked && at < 0) cur.push(o);
-            if (!ci.checked && at >= 0) cur.splice(at, 1);
-            ans[q.id] = cur;
-          });
-        } else {
-          ci.checked = ans[q.id] === o;
-          ci.addEventListener("change", function () {
-            ans[q.id] = o;
-            if (hasDeps(q.id)) renderForm();
-          });
-        }
+        var ci = h("input", { type: "radio", name: "q-" + q.id, id: "q-" + q.id + "-" + i, value: o });
+        ci.checked = ans[q.id] === o;
+        ci.addEventListener("change", function () {
+          ans[q.id] = o;
+          if (hasDeps(q.id)) renderForm();
+        });
         g.appendChild(h("label", { class: "choice" }, ci, h("span", { text: o })));
       });
       wrap.appendChild(g);
@@ -446,79 +335,15 @@ th { color: var(--muted); font-weight: 500; }
     return wrap;
   }
 
-  function safeUrl(u) {
-    u = (u || "").trim();
-    return /^https?:\/\/[^\s]+$/i.test(u) ? u : "";
-  }
   function renderMap(e) {
     var bar = $("mapbar");
     bar.textContent = "";
-    var url = safeUrl(e.mapUrl);
+    var url = (e.mapUrl || "").trim();
     var addr = (e.address || "").trim();
     var venue = (e.venue || "").trim();
     if (!url && (addr || venue)) url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(venue && addr ? venue + " " + addr : addr || venue);
-    if (url) bar.appendChild(h("a", { class: "btn small", id: "map-link", href: url, target: "_blank", rel: "noopener noreferrer", text: "開啟地圖導航" }));
-    if (addr) {
-      bar.appendChild(h("button", {
-        type: "button", class: "btn small ghost", id: "copy-addr", text: "複製地址",
-        onclick: async function (ev) {
-          var b = ev.currentTarget;
-          try { await navigator.clipboard.writeText(addr); b.textContent = "已複製"; } catch (x) { b.textContent = "請從上方選取地址"; }
-          setTimeout(function () { b.textContent = "複製地址"; }, 2500);
-        }
-      }));
-    }
+    if (url) bar.appendChild(h("a", { class: "btn small", href: url, target: "_blank", rel: "noopener noreferrer", text: "開啟地圖導航" }));
     bar.hidden = !bar.children.length;
-  }
-  function renderBlocks(c) {
-    var box = $("blocks");
-    box.textContent = "";
-    var list = c.blocks.filter(function (b) { return b.title.trim() || b.body.trim(); });
-    list.forEach(function (b) {
-      box.appendChild(h("div", { class: "blk" }, h("h3", { text: b.title }), h("p", { class: "blkbody", text: b.body })));
-    });
-    box.hidden = !list.length;
-  }
-  
-  var cdTimer = null;
-  function pad(n) { return n < 10 ? "0" + n : String(n); }
-  function eventTime(e) {
-    var s = (e.eventAt || "").trim();
-    if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(s)) return null;
-    var t = Date.parse(s.slice(0, 16) + ":00+08:00");
-    return isNaN(t) ? null : t;
-  }
-  function startCountdown(e) {
-    if (cdTimer) { clearInterval(cdTimer); cdTimer = null; }
-    var wrap = $("cdwrap"), box = $("countdown"), note = $("cd-note");
-    var t = eventTime(e);
-    box.textContent = "";
-    wrap.hidden = true;
-    note.hidden = true;
-    if (t == null) return;
-    var bs = ["天", "時", "分", "秒"].map(function (u) {
-      var b = h("b", { text: "0" });
-      box.appendChild(h("div", { class: "cd" }, b, h("span", { text: u })));
-      return b;
-    });
-    function tick() {
-      var ms = t - Date.now();
-      if (ms <= 0) {
-        wrap.hidden = true;
-        note.hidden = false;
-        note.textContent = ms > -21600000 ? "婚宴進行中，歡迎入席" : "婚宴圓滿落幕，感謝您的祝福";
-        return;
-      }
-      var s = Math.floor(ms / 1000);
-      wrap.hidden = false;
-      note.hidden = true;
-      bs[0].textContent = String(Math.floor(s / 86400));
-      bs[1].textContent = pad(Math.floor(s % 86400 / 3600));
-      bs[2].textContent = pad(Math.floor(s % 3600 / 60));
-      bs[3].textContent = pad(s % 60);
-    }
-    tick();
-    cdTimer = setInterval(tick, 1000);
   }
 
   function renderFront() {
@@ -527,7 +352,6 @@ th { color: var(--muted); font-weight: 500; }
     $("c-lead").textContent = e.lead;
     var img = $("cover-img");
     if (c.coverId) { img.src = blobUrl(c.coverId); img.hidden = false; $("cover").classList.add("has-img"); }
-    else { img.hidden = true; img.removeAttribute("src"); $("cover").classList.remove("has-img"); }
 
     var info = $("info");
     info.textContent = "";
@@ -535,19 +359,14 @@ th { color: var(--muted); font-weight: 500; }
       if (!r[1] && !r[2]) return;
       info.appendChild(h("div", {}, h("dt", { text: r[0] }), h("dd", {}, r[1] || r[2], r[1] && r[2] ? h("small", { text: r[2] }) : null)));
     });
-    info.hidden = !info.children.length;
     renderMap(e);
-    renderBlocks(c);
-    startCountdown(e);
 
     var gal = $("gallery");
     gal.textContent = "";
     c.gallery.forEach(function (id) {
       var im = h("img", { src: blobUrl(id), alt: "婚宴相片", loading: "lazy" });
-      im.addEventListener("error", function () { im.hidden = true; });
       gal.appendChild(im);
     });
-    gal.hidden = !c.gallery.length;
 
     $("form-title").textContent = e.formTitle;
     $("form-sub").textContent = e.formSub;
@@ -566,7 +385,7 @@ th { color: var(--muted); font-weight: 500; }
     return L.join("\n");
   }
 
-  $("rsvp").addEventListener("submit", async function (e) {
+  $("rsvp").addEventListener("submit", function (e) {
     e.preventDefault();
     var err = $("err");
     err.textContent = "";
@@ -583,25 +402,18 @@ th { color: var(--muted); font-weight: 500; }
         err.textContent = "請回答「" + q.label + "」。";
         var f = $("f-" + q.id);
         if (f) f.scrollIntoView({ block: "center" });
-        var first = f && f.querySelector("input, textarea");
-        if (first) first.focus();
         return;
       }
       if (!empty) out[q.id] = v;
     }
 
     var text = buildReply(out);
-    showDone(text, true);
-  });
-
-  function showDone(text) {
     $("status").textContent = "你的回覆已經送達新人，謝謝你！";
     $("reply").textContent = text;
     $("form-card").hidden = true;
     $("done-card").hidden = false;
-    $("flash").textContent = "";
     $("done-card").scrollIntoView({ block: "start" });
-  }
+  });
 
   $("copy").addEventListener("click", async function () {
     try {
@@ -612,13 +424,13 @@ th { color: var(--muted); font-weight: 500; }
     }
   });
 
+  $("edit").addEventListener:// ... 繼續維護
   $("edit").addEventListener("click", function () {
     $("done-card").hidden = true;
     $("form-card").hidden = false;
     $("form-card").scrollIntoView({ block: "start" });
   });
 
-  // 初始化執行
   renderFront();
 })();
 </script>
