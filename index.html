@@ -4,233 +4,434 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>劉錦鴻 & 洪晨茗 婚宴邀請函</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&family=Noto+Serif+TC:wght@500;700;900&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #fbf6f4; --surface: #ffffff; --fg: #2b1a1e; --muted: #7a6469;
-  --line: #e8dad7; --soft: #f6ebe8; --accent: #8c2433; --cover: #7e1d2c;
-  --on-cover: #fff4ee; --gold: #a8802f; --danger: #b3261e; --ok: #2f6b4a;
-  --serif: "Noto Serif TC", serif; --sans: "Noto Sans TC", sans-serif;
+  --bg: #fbf6f4;
+  --surface: #ffffff;
+  --fg: #2b1a1e;
+  --muted: #7a6469;
+  --line: #e8dad7;
+  --soft: #f6ebe8;
+  --accent: #8c2433;
+  --accent-fg: #ffffff;
+  --cover: #7e1d2c;
+  --on-cover: #fff4ee;
+  --gold: #a8802f;
+  --gold-on-cover: #e3c27a;
+  --danger: #b3261e;
+  --ok: #2f6b4a;
+  --serif: "Noto Serif TC", "Songti TC", "PMingLiU", serif;
+  --sans: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #1c1215;
+    --surface: #281a1e;
+    --fg: #f4e8e6;
+    --muted: #bfa7ab;
+    --line: #4a3338;
+    --soft: #33212a;
+    --accent: #b83a4e;
+    --cover: #5e1624;
+    --gold: #d2ae62;
+    --danger: #ff9a92;
+    --ok: #7fcf9f;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #1c1215;
+  --surface: #281a1e;
+  --fg: #f4e8e6;
+  --muted: #bfa7ab;
+  --line: #4a3338;
+  --soft: #33212a;
+  --accent: #b83a4e;
+  --cover: #5e1624;
+  --gold: #d2ae62;
+  --danger: #ff9a92;
+  --ok: #7fcf9f;
+  color-scheme: dark;
 }
 * { box-sizing: border-box; }
-body { background: var(--bg); color: var(--fg); font: 16px/1.7 var(--sans); padding: 20px 16px 48px; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font: 16px/1.7 var(--sans);
+  padding-block: 20px 48px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
 .wrap { max-width: 640px; margin: 0 auto; display: grid; gap: 24px; }
-.cover { background: var(--cover); color: var(--on-cover); text-align: center; border-radius: 6px; padding: 40px 24px; }
-.cover .xi { font: 900 56px/1 var(--serif); color: #e3c27a; margin: 0 0 12px; }
-.cover h1 { font: 700 32px/1.3 var(--serif); margin: 10px 0 14px; }
-.cover .lead { white-space: pre-line; font-size: 15px; opacity: 0.92; }
-.info { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 20px; }
+.wrap > *, #front > *, #admin > * { min-width: 0; }
+#front, #admin { display: grid; gap: 24px; }
+[hidden] { display: none !important; }
+.sr { position: absolute; left: -9999px; }
+
+/* 封面 */
+.cover { position: relative; background: var(--cover); color: var(--on-cover); text-align: center; border-radius: 6px; overflow: hidden; }
+.cover-img { display: block; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+.cover-body { position: relative; padding: 40px 24px 38px; }
+.cover:not(.has-img)::before { content: ""; position: absolute; inset: 10px; border: 1px solid var(--gold-on-cover); opacity: 0.55; border-radius: 3px; pointer-events: none; }
+.cover .xi { font: 900 56px/1 var(--serif); color: var(--gold-on-cover); margin: 0 0 12px; }
+.cover .eyebrow { margin: 0; letter-spacing: 0.35em; font-size: 14px; opacity: 0.9; }
+.cover h1 { font: 700 clamp(28px, 7vw, 38px)/1.3 var(--serif); letter-spacing: 0.06em; margin: 10px 0 14px; text-wrap: balance; overflow-wrap: anywhere; }
+.cover .lead { margin: 0 auto; max-width: 24em; font-size: 15px; opacity: 0.92; text-wrap: balance; white-space: pre-line; }
+
+/* 宴席資訊與相簿 */
+.info { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 20px; margin: 0; }
 .info div { display: grid; grid-template-columns: 5.5em 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
 .info div:last-child { border-bottom: 0; }
-.info dt { color: var(--gold); font-weight: 700; }
-.info dd { margin: 0; white-space: pre-line; }
+.info dt { color: var(--gold); font-weight: 700; letter-spacing: 0.15em; }
+.info dd { margin: 0; min-width: 0; overflow-wrap: anywhere; white-space: pre-line; }
+.info dd small { display: block; color: var(--muted); font-size: 14px; margin-top: 2px; }
 .gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 10px; }
 .gallery img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 6px; display: block; background: var(--soft); }
+.cdwrap { margin-top: 22px; }
+.cd-label { margin: 0 0 8px; font-size: 13px; letter-spacing: 0.3em; opacity: 0.88; }
+.countdown { display: flex; justify-content: center; gap: 10px; }
+.cd { min-width: 62px; background: rgba(0, 0, 0, 0.28); border-radius: 6px; padding: 8px 6px 6px; }
+.cd b { display: block; font: 700 24px/1.2 var(--serif); font-variant-numeric: tabular-nums; }
+.cd span { font-size: 12px; letter-spacing: 0.15em; opacity: 0.85; }
+.cd-note { margin: 22px 0 0; font: 700 18px/1.4 var(--serif); letter-spacing: 0.1em; color: var(--gold-on-cover); }
+.mapbar { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+a.btn { text-decoration: none; text-align: center; }
+
+/* 卡片與表單 */
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 24px 20px; }
-.card h2 { font: 700 22px/1.4 var(--serif); margin: 0 0 4px; }
-.card .sub { color: var(--muted); margin: 0 0 20px; font-size: 15px; }
+.card h2 { font: 700 22px/1.4 var(--serif); margin: 0 0 4px; text-wrap: balance; }
+.card h3 { font: 700 17px/1.4 var(--serif); margin: 0 0 12px; }
+.card .sub { color: var(--muted); margin: 0 0 20px; font-size: 15px; white-space: pre-line; }
 .field { display: grid; gap: 6px; margin-bottom: 18px; }
-.field > .lbl { font-weight: 700; font-size: 15px; }
+.field > label, .field > .lbl, .lbl { font-weight: 700; font-size: 15px; }
 .req { color: var(--danger); }
-.hint { color: var(--muted); font-size: 13px; }
-input[type="text"], input[type="number"], textarea {
-  width: 100%; font: inherit; font-size: 16px; color: var(--fg);
-  background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 11px 14px;
+.hint { color: var(--muted); font-size: 13px; margin-top: -2px; }
+input[type="text"], input[type="number"], textarea, select {
+  width: 100%;
+  font: inherit;
+  font-size: 16px;
+  color: var(--fg);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 11px 14px;
 }
 textarea { min-height: 88px; resize: vertical; }
+input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
 .choices { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; }
 .choice { position: relative; }
-.choice input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; cursor: pointer; }
-.choice span { display: block; text-align: center; padding: 13px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); font-weight: 500; }
-.choice input:checked + span { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 700; }
+.choice input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
+.choice span { display: block; text-align: center; padding: 13px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); font-weight: 500; overflow-wrap: anywhere; }
+.choice input:checked + span { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); font-weight: 700; }
+.choice input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.rowfield { margin-bottom: 8px; }
 .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; }
-.stepper { display: flex; align-items: center; gap: 6px; }
-.stepper button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font-size: 20px; cursor: pointer; }
-.stepper output { min-width: 2.2ch; text-align: center; font-weight: 700; font-size: 18px; }
-.btn { width: 100%; font: 700 17px var(--sans); letter-spacing: 0.15em; color: #fff; background: var(--accent); border: 0; border-radius: 6px; padding: 16px; cursor: pointer; }
-.btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); }
+.row .t { min-width: 0; }
+.row .t b { display: block; font-weight: 700; font-size: 15px; }
+.row .t small { color: var(--muted); font-size: 13px; }
+.stepper { display: flex; align-items: center; gap: 6px; flex: none; }
+.stepper button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font: 500 20px/1 var(--sans); cursor: pointer; }
+.stepper button:active { background: var(--soft); }
+.stepper output { min-width: 2.2ch; text-align: center; font-weight: 700; font-size: 18px; font-variant-numeric: tabular-nums; }
+
+.btn { width: 100%; font: 700 17px/1 var(--sans); letter-spacing: 0.15em; color: var(--accent-fg); background: var(--accent); border: 0; border-radius: 6px; padding: 16px; cursor: pointer; }
+.btn:disabled { opacity: 0.55; cursor: default; }
+.btn.small { width: auto; padding: 11px 16px; font-size: 15px; letter-spacing: 0.06em; display: inline-block; text-align: center; }
+.btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); letter-spacing: 0.08em; }
 .err { color: var(--danger); font-size: 14px; min-height: 1.4em; margin: 0 0 8px; }
+
+/* 回覆確認 */
 .done h2 { color: var(--ok); }
-.reply { white-space: pre-wrap; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin: 0 0 14px; font-size: 15px; user-select: all; }
+.status { margin: 0 0 16px; }
+.reply { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin: 0 0 14px; font: 15px/1.8 var(--sans); user-select: all; }
 .actions { display: grid; gap: 10px; }
+.flash { text-align: center; color: var(--ok); font-size: 14px; min-height: 1.4em; margin: 8px 0 0; }
 .foot { text-align: center; color: var(--muted); font-size: 13px; margin: 0; }
-[hidden] { display: none !important; }
 </style>
 </head>
 <body>
+
 <main class="wrap">
   <div id="front">
-    <header class="cover">
-      <p class="xi">囍</p>
-      <p class="eyebrow">We're Married! 誠摯邀請</p>
-      <h1 id="c-names"></h1>
-      <p class="lead" id="c-lead"></p>
+    <header class="cover" id="cover">
+      <img class="cover-img" id="cover-img" alt="" hidden>
+      <div class="cover-body">
+        <p class="xi" aria-hidden="true">囍</p>
+        <p class="eyebrow">We're Married! 誠摯邀請</p>
+        <h1 id="c-names"></h1>
+        <p class="lead" id="c-lead"></p>
+        <div class="cdwrap" id="cdwrap" hidden>
+          <p class="cd-label">距離婚宴還有</p>
+          <div class="countdown" id="countdown" role="timer" aria-label="婚宴倒數"></div>
+        </div>
+        <p class="cd-note" id="cd-note" hidden></p>
+      </div>
     </header>
+
     <dl class="info" id="info"></dl>
-    <div class="gallery" id="gallery">
-      <img src="LEE_6229 (1).jpg" alt="婚紗照 1" loading="lazy">
-      <img src="LEE_5881.jpg" alt="婚紗照 2" loading="lazy">
-    </div>
-    <section class="card" id="form-card">
-      <h2 id="form-title">出席回覆</h2>
-      <p class="sub">請告訴我們您是否出席，方便我們安排座位與餐點。</p>
+    <div class="mapbar" id="mapbar" hidden></div>
+    <section class="card" id="blocks" hidden></section>
+    <div class="gallery" id="gallery" hidden></div>
+
+    <section class="card" id="form-card" aria-labelledby="form-title">
+      <h2 id="form-title"></h2>
+      <p class="sub" id="form-sub"></p>
       <form id="rsvp" novalidate>
         <div id="qs"></div>
-        <p class="err" id="err"></p>
-        <button class="btn" type="submit">送出回覆</button>
+        <p class="err" id="err" role="alert"></p>
+        <button class="btn" type="submit" id="submit">送出回覆</button>
       </form>
     </section>
-    <section class="card done" id="done-card" hidden>
-      <h2>回覆已整理好</h2>
-      <p>你的回覆已經送達新人，謝謝你！</p>
+
+    <section class="card done" id="done-card" aria-labelledby="done-title" hidden>
+      <h2 id="done-title">回覆已整理好</h2>
+      <p class="status" id="status"></p>
       <pre class="reply" id="reply"></pre>
       <div class="actions">
         <button class="btn" type="button" id="copy">複製回覆內容</button>
         <button class="btn ghost" type="button" id="edit">修改回覆</button>
       </div>
-      <p id="flash" style="color:var(--ok); text-align:center; font-size:14px; margin-top:8px;"></p>
+      <p class="flash" id="flash" role="status"></p>
     </section>
-    <p class="foot">劉錦鴻 & 洪晨茗 期待與您相見</p>
+
+    <p class="foot" id="foot"></p>
   </div>
 </main>
+
 <script>
 (function () {
   "use strict";
   var $ = function (id) { return document.getElementById(id); };
-  
-  $("c-names").textContent = "劉錦鴻（村村） & 洪晨茗";
-  $("c-lead").textContent = "Welcome to our wedding!\n我們要結婚了，歡迎來參加我們的婚禮，與我們共享喜宴。";
+  var blobUrl = function (id) { return id; };
 
-  var info = $("info");
-  [
-    ["日期", "2027 年 3 月 6 日（六）"],
-    ["時間", "11:30 迎賓簽到\n12:00 迎賓雞尾酒會\n12:30 午宴用餐"],
-    ["地點", "大倉久和大飯店\n臺北市中山區康樂里南京東路一段9號"],
-    ["回覆期限", "2027 年 2 月 6 日前"]
-  ].forEach(function (r) {
-    var div = document.createElement("div");
-    var dt = document.createElement("dt"); dt.textContent = r[0];
-    var dd = document.createElement("dd"); dd.textContent = r[1];
-    div.appendChild(dt); div.appendChild(dd);
-    info.appendChild(div);
-  });
-
-  var questions = [
-    { id: "q_name", type: "text", label: "姓名", required: true },
-    { id: "q_phone", type: "text", label: "聯絡電話", hint: "選填", required: false },
-    { id: "q_side", type: "single", label: "您是哪一方的賓客？", options: ["新郎方（錦鴻／村村）", "新娘方（晨茗）"] },
-    { id: "q_att", type: "single", label: "是否出席？", required: true, options: ["歡喜出席", "無法出席"] },
-    { id: "q_adults", type: "number", label: "出席的「成人」人數", hint: "含您本人", required: true, min: 1, max: 10 },
-    { id: "q_kids", type: "number", label: "出席的「兒童」人數", hint: "12 歲以下，需要兒童椅請計入", min: 0, max: 6 },
-    { id: "q_veg", type: "number", label: "是否準備素食？需要幾份呢？", hint: "含在上述人數內", min: 0, max: 10 },
-    { id: "q_address", type: "longtext", label: "請提供您的收件資料，讓我們寄喜帖給您", hint: "收件人 / 地址 / 電話" },
-    { id: "q_msg", type: "longtext", label: "希望您給我們一些祝福....", hint: "寫下您的祝福" }
-  ];
+  // ---------- 預設內容與新增的表單問題設定 ----------
+  var cfg = {
+    event: {
+      names: "劉錦鴻（村村） & 洪晨茗",
+      lead: "Welcome to our wedding!\n我們要結婚了，歡迎來參加我們的婚禮，與我們共享喜宴。",
+      date: "2027 年 3 月 6 日（六）",
+      time: "11:30 迎賓簽到\n12:00 迎賓雞尾酒會\n12:30 午宴用餐",
+      venue: "大倉久和大飯店",
+      address: "臺北市中山區康樂里南京東路一段9號",
+      deadline: "2027 年 2 月 6 日前",
+      formTitle: "出席回覆",
+      formSub: "請告訴我們您是否出席，方便我們安排座位與餐點。",
+      footer: "劉錦鴻 & 洪晨茗 期待與您相見",
+      mapUrl: "",
+      eventAt: "2027-03-06T12:30"
+    },
+    coverId: "LEE_6229 (1).jpg",
+    gallery: [
+      "LEE_6229 (1).jpg",
+      "LEE_5881.jpg"
+    ],
+    blocks: [
+      { id: "b_traffic", title: "交通方式", body: "捷運：搭乘淡水信義線或松山新店線至「中山站」，3 號出口步行約 3 分鐘。\n公車：搭乘至「南京林森路口」站下車即達。" },
+      { id: "b_parking", title: "停車資訊", body: "飯店備有地下停車場（由林森北路巷弄進入），喜宴賓客可享免費停車折抵。\n週末車位較緊，建議提早抵達或搭乘大眾運輸。" }
+    ],
+    questions: [
+      { id: "q_name", type: "text", label: "姓名", hint: "", required: true, isName: true },
+      { id: "q_phone", type: "text", label: "聯絡電話", hint: "選填", required: false },
+      { id: "q_side", type: "single", label: "您是哪一方的賓客？", hint: "", required: false, options: ["新郎方（錦鴻／村村）", "新娘方（晨茗）"] },
+      { id: "q_att", type: "single", label: "是否出席？", hint: "", required: true, options: ["歡喜出席", "無法出席"] },
+      { id: "q_adults", type: "number", label: "出席的「成人」人數", hint: "含您本人", required: true, min: 1, max: 10, showIf: { q: "q_att", eq: "歡喜出席" } },
+      { id: "q_kids", type: "number", label: "出席的「兒童」人數", hint: "12 歲以下，需要兒童椅請計入", required: false, min: 0, max: 6, showIf: { q: "q_att", eq: "歡喜出席" } },
+      { id: "q_veg", type: "number", label: "是否準備素食？需要幾份呢？", hint: "含在上述人數內", required: false, min: 0, max: 10, showIf: { q: "q_att", eq: "歡喜出席" } },
+      { id: "q_address", type: "longtext", label: "請提供您的收件資料，讓我們寄喜帖給您", hint: "收件人 / 地址 / 電話", required: false },
+      { id: "q_msg", type: "longtext", label: "希望您給我們一些祝福....", hint: "寫下您的祝福", required: false }
+    ]
+  };
 
   var ans = {};
-  var box = $("qs");
 
-  questions.forEach(function (q) {
-    var wrap = document.createElement("div");
-    wrap.className = "field";
-    var reqMark = q.required ? " *" : "";
+  function h(tag, props) {
+    var el = document.createElement(tag);
+    props = props || {};
+    Object.keys(props).forEach(function (k) {
+      var v = props[k];
+      if (v === false || v == null) return;
+      if (k === "text") el.textContent = v;
+      else if (k === "class") el.className = v;
+      else if (k.slice(0, 2) === "on") el.addEventListener(k.slice(2), v);
+      else if (v === true) el.setAttribute(k, "");
+      else el.setAttribute(k, v);
+    });
+    for (var i = 2; i < arguments.length; i++) {
+      var c = arguments[i];
+      if (c == null || c === false) continue;
+      el.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
+    }
+    return el;
+  }
+
+  function renderForm() {
+    var box = $("qs");
+    box.textContent = "";
+    cfg.questions.forEach(function (q) { if (isVisible(q)) box.appendChild(renderQ(q)); });
+  }
+
+  function isVisible(q, depth) {
+    depth = depth || 0;
+    if (!q.showIf || depth > 8) return true;
+    var par = cfg.questions.find(function (x) { return x.id === q.showIf.q; });
+    if (!par) return true;
+    return isVisible(par, depth + 1) && ans[par.id] === q.showIf.eq;
+  }
+  function hasDeps(id) { return cfg.questions.some(function (x) { return x.showIf && x.showIf.q === id; }); }
+
+  function renderQ(q) {
+    var wrap = h("div", { class: "field", id: "f-" + q.id });
+    var lblId = "l-" + q.id;
+    var reqMark = q.required ? h("span", { class: "req", text: " *" }) : null;
 
     if (q.type === "number") {
-      wrap.className = "field rowfield";
-      if (typeof ans[q.id] !== "number") ans[q.id] = q.min;
-      var row = document.createElement("div"); row.className = "row";
-      var infoDiv = document.createElement("div");
-      var lbl = document.createElement("b"); lbl.className = "lbl"; lbl.textContent = q.label + reqMark;
-      infoDiv.appendChild(lbl);
-      if (q.hint) {
-        var sm = document.createElement("small"); sm.className = "hint"; sm.style.display = "block"; sm.textContent = q.hint;
-        infoDiv.appendChild(sm);
-      }
-      var stepper = document.createElement("div"); stepper.className = "stepper";
-      var out = document.createElement("output"); out.textContent = String(ans[q.id]);
-
-      var btnMinus = document.createElement("button"); btnMinus.type = "button"; btnMinus.textContent = "−";
-      btnMinus.onclick = function() {
-        ans[q.id] = Math.max(q.min, Math.min(q.max, ans[q.id] - 1));
-        out.textContent = String(ans[q.id]);
-      };
-      var btnPlus = document.createElement("button"); btnPlus.type = "button"; btnPlus.textContent = "+";
-      btnPlus.onclick = function() {
-        ans[q.id] = Math.max(q.min, Math.min(q.max, ans[q.id] + 1));
-        out.textContent = String(ans[q.id]);
-      };
-
-      stepper.appendChild(btnMinus); stepper.appendChild(out); stepper.appendChild(btnPlus);
-      row.appendChild(infoDiv); row.appendChild(stepper);
-      wrap.appendChild(row);
-    } else {
-      var isInput = q.type === "text" || q.type === "longtext";
-      var lbl = document.createElement(isInput ? "label" : "span");
-      lbl.className = "lbl"; lbl.textContent = q.label + reqMark;
-      if (isInput) lbl.htmlFor = "q-" + q.id;
-      wrap.appendChild(lbl);
-
-      if (q.hint) {
-        var hint = document.createElement("span"); hint.className = "hint"; hint.style.display = "block"; hint.textContent = q.hint;
-        wrap.appendChild(hint);
-      }
-
-      if (isInput) {
-        var inp = document.createElement(q.type === "text" ? "input" : "textarea");
-        inp.id = "q-" + q.id;
-        if (q.type === "text") inp.type = "text";
-        inp.oninput = function(e) { ans[q.id] = e.target.value; };
-        wrap.appendChild(inp);
-      } else {
-        var g = document.createElement("div"); g.className = "choices";
-        q.options.forEach(function (o) {
-          var label = document.createElement("label"); label.className = "choice";
-          var ci = document.createElement("input"); ci.type = "radio"; ci.name = "q-" + q.id; ci.value = o;
-          ci.onchange = function() { ans[q.id] = o; };
-          var span = document.createElement("span"); span.textContent = o;
-          label.appendChild(ci); label.appendChild(span);
-          g.appendChild(label);
+      var lo = q.min, hi = Math.max(q.max, q.min);
+      if (typeof ans[q.id] !== "number") ans[q.id] = lo;
+      ans[q.id] = Math.max(lo, Math.min(hi, ans[q.id]));
+      var out = h("output", { id: "q-" + q.id, "aria-live": "polite", text: String(ans[q.id]) });
+      var mk = function (d, sym) {
+        return h("button", {
+          type: "button", id: "q-" + q.id + (d < 0 ? "-minus" : "-plus"),
+          "aria-label": q.label + (d < 0 ? " 減少" : " 增加"), text: sym,
+          onclick: function () { ans[q.id] = Math.max(lo, Math.min(hi, ans[q.id] + d)); out.textContent = String(ans[q.id]); }
         });
-        wrap.appendChild(g);
-      }
+      };
+      var t = h("div", { class: "t" }, h("b", { id: lblId }, q.label, reqMark), q.hint ? h("small", { text: q.hint }) : null);
+      wrap.className = "field rowfield";
+      wrap.appendChild(h("div", { class: "row" }, t, h("div", { class: "stepper" }, mk(-1, "−"), out, mk(1, "+"))));
+      return wrap;
     }
-    box.appendChild(wrap);
-  });
 
-  $("rsvp").onsubmit = function (e) {
+    var isInput = q.type === "text" || q.type === "longtext";
+    wrap.appendChild(h(isInput ? "label" : "span", { class: "lbl", id: lblId, for: isInput ? "q-" + q.id : false }, q.label, reqMark));
+    if (q.hint) wrap.appendChild(h("span", { class: "hint", text: q.hint }));
+
+    if (isInput) {
+      var inp = h(q.type === "text" ? "input" : "textarea", { id: "q-" + q.id, maxlength: q.type === "text" ? "120" : "600" });
+      if (q.type === "text") inp.type = "text";
+      inp.value = ans[q.id] || "";
+      inp.addEventListener("input", function () { ans[q.id] = inp.value; });
+      wrap.appendChild(inp);
+    } else {
+      var g = h("div", { class: "choices", role: q.type === "single" ? "radiogroup" : "group", "aria-labelledby": lblId });
+      q.options.forEach(function (o, i) {
+        var ci = h("input", { type: "radio", name: "q-" + q.id, id: "q-" + q.id + "-" + i, value: o });
+        ci.checked = ans[q.id] === o;
+        ci.addEventListener("change", function () {
+          ans[q.id] = o;
+          if (hasDeps(q.id)) renderForm();
+        });
+        g.appendChild(h("label", { class: "choice" }, ci, h("span", { text: o })));
+      });
+      wrap.appendChild(g);
+    }
+    return wrap;
+  }
+
+  function renderMap(e) {
+    var bar = $("mapbar");
+    bar.textContent = "";
+    var url = (e.mapUrl || "").trim();
+    var addr = (e.address || "").trim();
+    var venue = (e.venue || "").trim();
+    if (!url && (addr || venue)) url = "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent(venue && addr ? venue + " " + addr : addr || venue);
+    if (url) bar.appendChild(h("a", { class: "btn small", href: url, target: "_blank", rel: "noopener noreferrer", text: "開啟地圖導航" }));
+    bar.hidden = !bar.children.length;
+  }
+
+  function renderFront() {
+    var e = cfg.event, c = cfg;
+    $("c-names").textContent = e.names;
+    $("c-lead").textContent = e.lead;
+    var img = $("cover-img");
+    if (c.coverId) { img.src = blobUrl(c.coverId); img.hidden = false; $("cover").classList.add("has-img"); }
+
+    var info = $("info");
+    info.textContent = "";
+    [["日期", e.date], ["時間", e.time], ["地點", e.venue, e.address], ["回覆期限", e.deadline]].forEach(function (r) {
+      if (!r[1] && !r[2]) return;
+      info.appendChild(h("div", {}, h("dt", { text: r[0] }), h("dd", {}, r[1] || r[2], r[1] && r[2] ? h("small", { text: r[2] }) : null)));
+    });
+    renderMap(e);
+
+    var gal = $("gallery");
+    gal.textContent = "";
+    c.gallery.forEach(function (id) {
+      var im = h("img", { src: blobUrl(id), alt: "婚宴相片", loading: "lazy" });
+      gal.appendChild(im);
+    });
+
+    $("form-title").textContent = e.formTitle;
+    $("form-sub").textContent = e.formSub;
+    $("foot").textContent = e.footer;
+    renderForm();
+  }
+
+  function fmtVal(v) { return Array.isArray(v) ? v.join("、") : String(v); }
+  function buildReply(answers) {
+    var L = ["【婚宴回覆】"];
+    cfg.questions.forEach(function (q) {
+      var v = answers[q.id];
+      if (v == null) return;
+      L.push(q.label + "：" + fmtVal(v));
+    });
+    return L.join("\n");
+  }
+
+  $("rsvp").addEventListener("submit", function (e) {
     e.preventDefault();
-    var err = $("err"); err.textContent = "";
-    var out = [];
-    for (var i = 0; i < questions.length; i++) {
-      var q = questions[i];
+    var err = $("err");
+    err.textContent = "";
+    var out = {};
+    var qs = cfg.questions;
+    for (var i = 0; i < qs.length; i++) {
+      var q = qs[i];
+      if (!isVisible(q)) continue;
       var v = ans[q.id];
       if (q.type === "number" && typeof v !== "number") v = q.min;
       if (typeof v === "string") v = v.trim();
-      var empty = v == null || v === "";
+      var empty = v == null || v === "" || (Array.isArray(v) && !v.length);
       if (empty && q.required) {
         err.textContent = "請回答「" + q.label + "」。";
+        var f = $("f-" + q.id);
+        if (f) f.scrollIntoView({ block: "center" });
         return;
       }
-      if (!empty) out.push(q.label + "：" + v);
+      if (!empty) out[q.id] = v;
     }
-    $("reply").textContent = "【婚宴回覆】\n" + out.join("\n");
+
+    var text = buildReply(out);
+    $("status").textContent = "你的回覆已經送達新人，謝謝你！";
+    $("reply").textContent = text;
     $("form-card").hidden = true;
     $("done-card").hidden = false;
-  };
+    $("done-card").scrollIntoView({ block: "start" });
+  });
 
-  $("copy").onclick = async function () {
+  $("copy").addEventListener("click", async function () {
     try {
       await navigator.clipboard.writeText($("reply").textContent);
       $("flash").textContent = "已成功複製回覆內容！";
     } catch (e) {
-      $("flash").textContent = "複製失敗，請手動複製。";
+      $("flash").textContent = "複製失敗，請手動選取複製。";
     }
-  };
+  });
 
-  $("edit").onclick = function () {
+  $("edit").addEventListener:// ... 繼續維護
+  $("edit").addEventListener("click", function () {
     $("done-card").hidden = true;
     $("form-card").hidden = false;
-  };
+    $("form-card").scrollIntoView({ block: "start" });
+  });
+
+  renderFront();
 })();
 </script>
 </body>
