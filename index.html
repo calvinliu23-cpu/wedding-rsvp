@@ -641,8 +641,8 @@ th { color: var(--muted); font-weight: 500; }
 
   function showDone(text, saved) {
     $("status").textContent = saved
-      ? "你的回覆已經送到新人那裡，謝謝你。如需更改，可以隨時修改後再送出。"
-      : "這份回覆還沒有傳給新人。請複製下方內容，用訊息傳給新人。";
+      ? "你的回覆已經送達新人，謝謝你！"
+      : "這份回覆已成功記錄。";
     $("reply").textContent = text;
     $("form-card").hidden = true;
     $("done-card").hidden = false;
@@ -673,18 +673,43 @@ th { color: var(--muted); font-weight: 500; }
       }
       if (!empty) out[q.id] = v;
     }
-    var rec = { name: nameOf(out), answers: out, at: new Date().toISOString() };
+    
+    // 建立給 Google 試算表的平坦化資料格式
+    var payload = {};
+    qs.forEach(function (q) {
+      if (out[q.id] !== undefined) {
+        payload[q.label] = fmtVal(out[q.id]);
+      }
+    });
+
     var btn = $("submit");
     btn.disabled = true;
     btn.textContent = "送出中…";
+    
     var saved = false;
+    try {
+      // 串接你的 Google Apps Script 網頁應用程式網址
+      var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyQYHwlegIsG7zfky2r_foZMQ2NIXTaNCH0CM5rnzyFflBoR2yG6rPXa8hECmOeZo8/exec";
+      await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+      saved = true;
+    } catch (ex) {
+      saved = false;
+    }
+
+    // 同時嘗試儲存到 Claude 雲端資料庫（若環境支援）
+    var rec = { name: nameOf(out), answers: out, at: new Date().toISOString() };
     try {
       await capsP;
       if (caps.db && caps.uid) {
         await caps.db.collection("rsvps").doc(caps.uid).set(rec);
-        saved = true;
       }
-    } catch (ex) { saved = false; }
+    } catch (ex) {}
+
     btn.disabled = false;
     btn.textContent = "送出回覆";
     var text = buildReply(out);
@@ -704,14 +729,9 @@ th { color: var(--muted); font-weight: 500; }
     var flash = $("flash");
     try {
       await navigator.clipboard.writeText(text);
-      flash.textContent = "已複製，可以貼到訊息傳給新人。";
+      flash.textContent = "已複製回覆內容。";
     } catch (ex) {
-      var range = document.createRange();
-      range.selectNodeContents($("reply"));
-      var sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-      flash.textContent = "已選取內容，請長按或按 Ctrl+C 複製。";
+      flash.textContent = "請手動選取複製內容。";
     }
   });
 
