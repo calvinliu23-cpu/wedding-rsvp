@@ -96,7 +96,9 @@ textarea { min-height: 88px; resize: vertical; }
 <script>
 (function () {
   "use strict";
-  var $= function (id) { return document.getElementById(id); };$("c-names").textContent = "劉錦鴻（村村） & 洪晨茗";
+  var $ = function (id) { return document.getElementById(id); };
+  
+  $("c-names").textContent = "劉錦鴻（村村） & 洪晨茗";
   $("c-lead").textContent = "Welcome to our wedding!\n我們要結婚了，歡迎來參加我們的婚禮，與我們共享喜宴。";
 
   var info = $("info");
@@ -118,4 +120,142 @@ textarea { min-height: 88px; resize: vertical; }
     { id: "q_phone", type: "text", label: "聯絡電話", hint: "選填", required: false },
     { id: "q_side", type: "single", label: "您是哪一方的賓客？", options: ["新郎方（錦鴻／村村）", "新娘方（晨茗）"] },
     { id: "q_att", type: "single", label: "是否出席？", required: true, options: ["歡喜出席", "無法出席"] },
-    { id: "q_adults", type
+    { id: "q_adults", type: "number", label: "出席的「成人」人數", hint: "含您本人", required: true, min: 1, max: 10 },
+    { id: "q_kids", type: "number", label: "出席的「兒童」人數", hint: "12 歲以下，需要兒童椅請計入", min: 0, max: 6 },
+    { id: "q_veg", type: "number", label: "是否準備素食？需要幾份呢？", hint: "含在上述人數內", min: 0, max: 10 },
+    { id: "q_address", type: "longtext", label: "請提供您的收件資料，讓我們寄喜帖給您", hint: "收件人 / 地址 / 電話" },
+    { id: "q_msg", type: "longtext", label: "希望您給我們一些祝福....", hint: "寫下您的祝福" }
+  ];
+
+  var ans = {};
+  var box = $("qs");
+
+  questions.forEach(function (q) {
+    var wrap = document.createElement("div");
+    wrap.className = "field";
+    var reqMark = q.required ? " *" : "";
+
+    if (q.type === "number") {
+      wrap.className = "field rowfield";
+      if (typeof ans[q.id] !== "number") ans[q.id] = q.min;
+      var row = document.createElement("div"); row.className = "row";
+      var infoDiv = document.createElement("div");
+      var lbl = document.createElement("b"); lbl.className = "lbl"; lbl.textContent = q.label + reqMark;
+      infoDiv.appendChild(lbl);
+      if (q.hint) {
+        var sm = document.createElement("small"); sm.className = "hint"; sm.style.display = "block"; sm.textContent = q.hint;
+        infoDiv.appendChild(sm);
+      }
+      var stepper = document.createElement("div"); stepper.className = "stepper";
+      var out = document.createElement("output"); out.textContent = String(ans[q.id]);
+
+      var btnMinus = document.createElement("button"); btnMinus.type = "button"; btnMinus.textContent = "−";
+      btnMinus.onclick = function() {
+        ans[q.id] = Math.max(q.min, Math.min(q.max, ans[q.id] - 1));
+        out.textContent = String(ans[q.id]);
+      };
+      var btnPlus = document.createElement("button"); btnPlus.type = "button"; btnPlus.textContent = "+";
+      btnPlus.onclick = function() {
+        ans[q.id] = Math.max(q.min, Math.min(q.max, ans[q.id] + 1));
+        out.textContent = String(ans[q.id]);
+      };
+
+      stepper.appendChild(btnMinus); stepper.appendChild(out); stepper.appendChild(btnPlus);
+      row.appendChild(infoDiv); row.appendChild(stepper);
+      wrap.appendChild(row);
+    } else {
+      var isInput = q.type === "text" || q.type === "longtext";
+      var lbl = document.createElement(isInput ? "label" : "span");
+      lbl.className = "lbl"; lbl.textContent = q.label + reqMark;
+      if (isInput) lbl.htmlFor = "q-" + q.id;
+      wrap.appendChild(lbl);
+
+      if (q.hint) {
+        var hint = document.createElement("span"); hint.className = "hint"; hint.style.display = "block"; hint.textContent = q.hint;
+        wrap.appendChild(hint);
+      }
+
+      if (isInput) {
+        var inp = document.createElement(q.type === "text" ? "input" : "textarea");
+        inp.id = "q-" + q.id;
+        if (q.type === "text") inp.type = "text";
+        inp.oninput = function(e) { ans[q.id] = e.target.value; };
+        wrap.appendChild(inp);
+      } else {
+        var g = document.createElement("div"); g.className = "choices";
+        q.options.forEach(function (o) {
+          var label = document.createElement("label"); label.className = "choice";
+          var ci = document.createElement("input"); ci.type = "radio"; ci.name = "q-" + q.id; ci.value = o;
+          ci.onchange = function() { ans[q.id] = o; };
+          var span = document.createElement("span"); span.textContent = o;
+          label.appendChild(ci); label.appendChild(span);
+          g.appendChild(label);
+        });
+        wrap.appendChild(g);
+      }
+    }
+    box.appendChild(wrap);
+  });
+
+  $("rsvp").onsubmit = async function (e) {
+    e.preventDefault();
+    var err = $("err"); err.textContent = "";
+    var out = [];
+    var payload = {};
+
+    for (var i = 0; i < questions.length; i++) {
+      var q = questions[i];
+      var v = ans[q.id];
+      if (q.type === "number" && typeof v !== "number") v = q.min;
+      if (typeof v === "string") v = v.trim();
+      var empty = v == null || v === "";
+      if (empty && q.required) {
+        err.textContent = "請回答「" + q.label + "」。";
+        return;
+      }
+      if (!empty) {
+        out.push(q.label + "：" + v);
+        payload[q.label] = v;
+      }
+    }
+
+    var submitBtn = $("submit-btn");
+    submitBtn.disabled = true;
+    submitBtn.textContent = "傳送中…";
+
+    try {
+      // 串接你的 Google Apps Script 網址
+      await fetch("https://script.google.com/macros/s/AKfycbypXtxhjs-scoegQRJ5gEDtbXu6D5lprwO9Ed_I9-c4XQjJTIiTlPpkh8NJ-h6SLzjk/exec", {
+        method: "POST",
+        mode: "no-cors",
+        body: JSON.stringify(payload)
+      });
+    } catch (err) {
+      console.error(err);
+    }
+
+    submitBtn.disabled = false;
+    submitBtn.textContent = "送出回覆";
+
+    $("reply").textContent = "【婚宴回覆】\n" + out.join("\n");
+    $("form-card").hidden = true;
+    $("done-card").hidden = false;
+  };
+
+  $("copy").onclick = async function () {
+    try {
+      await navigator.clipboard.writeText($("reply").textContent);
+      $("flash").textContent = "已成功複製回覆內容！";
+    } catch (e) {
+      $("flash").textContent = "複製失敗，請手動複製。";
+    }
+  };
+
+  $("edit").onclick = function () {
+    $("done-card").hidden = true;
+    $("form-card").hidden = false;
+  };
+})();
+</script>
+</body>
+</html>
