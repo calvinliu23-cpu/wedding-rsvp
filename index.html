@@ -15,17 +15,23 @@
 * { box-sizing: border-box; }
 body { background: var(--bg); color: var(--fg); font: 16px/1.7 var(--sans); padding: 20px 16px 48px; }
 .wrap { max-width: 640px; margin: 0 auto; display: grid; gap: 24px; }
-.cover { background: var(--cover); color: var(--on-cover); text-align: center; border-radius: 6px; padding: 40px 24px; }
+
+/* 頂部大直式婚紗照 */
+.hero-img { width: 100%; border-radius: 6px 6px 0 0; display: block; object-fit: contain; background: #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+
+/* 酒紅色標題區塊 */
+.cover { background: var(--cover); color: var(--on-cover); text-align: center; border-radius: 0 0 6px 6px; padding: 40px 24px; margin-top: -24px; }
 .cover .xi { font: 900 56px/1 var(--serif); color: #e3c27a; margin: 0 0 12px; }
 .cover h1 { font: 700 32px/1.3 var(--serif); margin: 10px 0 14px; }
 .cover .lead { white-space: pre-line; font-size: 15px; opacity: 0.92; }
+
 .info { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 8px 20px; }
 .info div { display: grid; grid-template-columns: 5.5em 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--line); }
 .info div:last-child { border-bottom: 0; }
 .info dt { color: var(--gold); font-weight: 700; }
 .info dd { margin: 0; white-space: pre-line; }
 
-/* 放大相簿圖片排版 */
+/* 第二張相簿圖片 */
 .gallery { display: grid; grid-template-columns: 1fr; gap: 16px; }
 .gallery img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 8px; display: block; background: var(--soft); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 
@@ -34,7 +40,6 @@ body { background: var(--bg); color: var(--fg); font: 16px/1.7 var(--sans); padd
 .card .sub { color: var(--muted); margin: 0 0 20px; font-size: 15px; }
 .field { display: grid; gap: 6px; margin-bottom: 18px; }
 .field > .lbl { font-weight: 700; font-size: 15px; }
-.req { color: var(--danger); }
 .hint { color: var(--muted); font-size: 13px; }
 input[type="text"], input[type="number"], textarea {
   width: 100%; font: inherit; font-size: 16px; color: var(--fg);
@@ -63,17 +68,24 @@ textarea { min-height: 88px; resize: vertical; }
 <body>
 <main class="wrap">
   <div id="front">
+    <!-- 頂部大直式婚紗照 -->
+    <img src="LEE_6229 (1).jpg" alt="封面婚紗照" class="hero-img" loading="lazy">
+    
+    <!-- 酒紅色標題區塊 -->
     <header class="cover">
       <p class="xi">囍</p>
       <p class="eyebrow">We're Married! 誠摯邀請</p>
       <h1 id="c-names"></h1>
       <p class="lead" id="c-lead"></p>
     </header>
+
     <dl class="info" id="info"></dl>
+
+    <!-- 其他相片 -->
     <div class="gallery" id="gallery">
-      <img src="LEE_6229 (1).jpg" alt="婚紗照 1" loading="lazy">
       <img src="LEE_5881.jpg" alt="婚紗照 2" loading="lazy">
     </div>
+
     <section class="card" id="form-card">
       <h2 id="form-title">出席回覆</h2>
       <p class="sub">請告訴我們您是否出席，方便我們安排座位與餐點。</p>
