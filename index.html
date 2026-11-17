@@ -211,7 +211,6 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
   var $ = function (id) { return document.getElementById(id); };
   var blobUrl = function (id) { return id; };
 
-  // ---------- 預設內容與新增的表單問題設定 ----------
   var cfg = {
     event: {
       names: "劉錦鴻（村村） & 洪晨茗",
@@ -320,7 +319,7 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
       inp.addEventListener("input", function () { ans[q.id] = inp.value; });
       wrap.appendChild(inp);
     } else {
-      var g = h("div", { class: "choices", role: q.type === "single" ? "radiogroup" : "group", "aria-labelledby": lblId });
+      var g = h("div", { class: "choices", role: "radiogroup", "aria-labelledby": lblId });
       q.options.forEach(function (o, i) {
         var ci = h("input", { type: "radio", name: "q-" + q.id, id: "q-" + q.id + "-" + i, value: o });
         ci.checked = ans[q.id] === o;
@@ -346,12 +345,56 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
     bar.hidden = !bar.children.length;
   }
 
+  var cdTimer = null;
+  function pad(n) { return n < 10 ? "0" + n : String(n); }
+  function eventTime(e) {
+    var s = (e.eventAt || "").trim();
+    if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}/.test(s)) return null;
+    var t = Date.parse(s.slice(0, 16) + ":00+08:00");
+    return isNaN(t) ? null : t;
+  }
+  function startCountdown(e) {
+    if (cdTimer) { clearInterval(cdTimer); cdTimer = null; }
+    var wrap = $("cdwrap"), box = $("countdown"), note = $("cd-note");
+    var t = eventTime(e);
+    box.textContent = "";
+    wrap.hidden = true;
+    note.hidden = true;
+    if (t == null) return;
+    var bs = ["天", "時", "分", "秒"].map(function (u) {
+      var b = h("b", { text: "0" });
+      box.appendChild(h("div", { class: "cd" }, b, h("span", { text: u })));
+      return b;
+    });
+    function tick() {
+      var ms = t - Date.now();
+      if (ms <= 0) {
+        wrap.hidden = true;
+        note.hidden = false;
+        note.textContent = ms > -21600000 ? "婚宴進行中，歡迎入席" : "婚宴圓滿落幕，感謝您的祝福";
+        return;
+      }
+      var s = Math.floor(ms / 1000);
+      wrap.hidden = false;
+      note.hidden = true;
+      bs[0].textContent = String(Math.floor(s / 86400));
+      bs[1].textContent = pad(Math.floor(s % 86400 / 3600));
+      bs[2].textContent = pad(Math.floor(s % 3600 / 60));
+      bs[3].textContent = pad(s % 60);
+    }
+    tick();
+    cdTimer = setInterval(tick, 1000);
+  }
+
   function renderFront() {
     var e = cfg.event, c = cfg;
     $("c-names").textContent = e.names;
     $("c-lead").textContent = e.lead;
+    
+    // 這裡補上載入封面照片的邏輯
     var img = $("cover-img");
     if (c.coverId) { img.src = blobUrl(c.coverId); img.hidden = false; $("cover").classList.add("has-img"); }
+    else { img.hidden = true; img.removeAttribute("src"); $("cover").classList.remove("has-img"); }
 
     var info = $("info");
     info.textContent = "";
@@ -360,6 +403,7 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
       info.appendChild(h("div", {}, h("dt", { text: r[0] }), h("dd", {}, r[1] || r[2], r[1] && r[2] ? h("small", { text: r[2] }) : null)));
     });
     renderMap(e);
+    startCountdown(e);
 
     var gal = $("gallery");
     gal.textContent = "";
@@ -367,6 +411,7 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
       var im = h("img", { src: blobUrl(id), alt: "婚宴相片", loading: "lazy" });
       gal.appendChild(im);
     });
+    gal.hidden = !c.gallery.length;
 
     $("form-title").textContent = e.formTitle;
     $("form-sub").textContent = e.formSub;
@@ -424,7 +469,6 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
     }
   });
 
-  $("edit").addEventListener:// ... 繼續維護
   $("edit").addEventListener("click", function () {
     $("done-card").hidden = true;
     $("form-card").hidden = false;
