@@ -67,10 +67,9 @@ body {
   padding-right: max(16px, env(safe-area-inset-right, 0px));
 }
 .wrap { max-width: 640px; margin: 0 auto; display: grid; gap: 24px; }
-.wrap > *, #front > *, #admin > * { min-width: 0; }
-#front, #admin { display: grid; gap: 24px; }
+.wrap > *, #front > * { min-width: 0; }
+#front { display: grid; gap: 24px; }
 [hidden] { display: none !important; }
-.sr { position: absolute; left: -9999px; }
 
 /* 封面 */
 .cover { position: relative; background: var(--cover); color: var(--on-cover); text-align: center; border-radius: 6px; overflow: hidden; }
@@ -104,7 +103,6 @@ a.btn { text-decoration: none; text-align: center; }
 /* 卡片與表單 */
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 24px 20px; }
 .card h2 { font: 700 22px/1.4 var(--serif); margin: 0 0 4px; text-wrap: balance; }
-.card h3 { font: 700 17px/1.4 var(--serif); margin: 0 0 12px; }
 .card .sub { color: var(--muted); margin: 0 0 20px; font-size: 15px; white-space: pre-line; }
 .field { display: grid; gap: 6px; margin-bottom: 18px; }
 .field > label, .field > .lbl, .lbl { font-weight: 700; font-size: 15px; }
@@ -129,7 +127,6 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
 .choice input { position: absolute; opacity: 0; inset: 0; width: 100%; height: 100%; margin: 0; cursor: pointer; }
 .choice span { display: block; text-align: center; padding: 13px 8px; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); font-weight: 500; overflow-wrap: anywhere; }
 .choice input:checked + span { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); font-weight: 700; }
-.choice input:focus-visible + span { outline: 2px solid var(--accent); outline-offset: 2px; }
 
 .rowfield { margin-bottom: 8px; }
 .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 0; }
@@ -138,16 +135,13 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
 .row .t small { color: var(--muted); font-size: 13px; }
 .stepper { display: flex; align-items: center; gap: 6px; flex: none; }
 .stepper button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--bg); color: var(--fg); font: 500 20px/1 var(--sans); cursor: pointer; }
-.stepper button:active { background: var(--soft); }
 .stepper output { min-width: 2.2ch; text-align: center; font-weight: 700; font-size: 18px; font-variant-numeric: tabular-nums; }
 
 .btn { width: 100%; font: 700 17px/1 var(--sans); letter-spacing: 0.15em; color: var(--accent-fg); background: var(--accent); border: 0; border-radius: 6px; padding: 16px; cursor: pointer; }
-.btn:disabled { opacity: 0.55; cursor: default; }
 .btn.small { width: auto; padding: 11px 16px; font-size: 15px; letter-spacing: 0.06em; display: inline-block; text-align: center; }
 .btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--accent); letter-spacing: 0.08em; }
 .err { color: var(--danger); font-size: 14px; min-height: 1.4em; margin: 0 0 8px; }
 
-/* 回覆確認 */
 .done h2 { color: var(--ok); }
 .status { margin: 0 0 16px; }
 .reply { white-space: pre-wrap; overflow-wrap: anywhere; background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; margin: 0 0 14px; font: 15px/1.8 var(--sans); user-select: all; }
@@ -177,7 +171,6 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
 
     <dl class="info" id="info"></dl>
     <div class="mapbar" id="mapbar" hidden></div>
-    <section class="card" id="blocks" hidden></section>
     <div class="gallery" id="gallery" hidden></div>
 
     <section class="card" id="form-card" aria-labelledby="form-title">
@@ -231,18 +224,14 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
       "LEE_6229 (1).jpg",
       "LEE_5881.jpg"
     ],
-    blocks: [
-      { id: "b_traffic", title: "交通方式", body: "捷運：搭乘淡水信義線或松山新店線至「中山站」，3 號出口步行約 3 分鐘。\n公車：搭乘至「南京林森路口」站下車即達。" },
-      { id: "b_parking", title: "停車資訊", body: "飯店備有地下停車場（由林森北路巷弄進入），喜宴賓客可享免費停車折抵。\n週末車位較緊，建議提早抵達或搭乘大眾運輸。" }
-    ],
     questions: [
-      { id: "q_name", type: "text", label: "姓名", hint: "", required: true, isName: true },
+      { id: "q_name", type: "text", label: "姓名", hint: "", required: true },
       { id: "q_phone", type: "text", label: "聯絡電話", hint: "選填", required: false },
       { id: "q_side", type: "single", label: "您是哪一方的賓客？", hint: "", required: false, options: ["新郎方（錦鴻／村村）", "新娘方（晨茗）"] },
       { id: "q_att", type: "single", label: "是否出席？", hint: "", required: true, options: ["歡喜出席", "無法出席"] },
-      { id: "q_adults", type: "number", label: "出席的「成人」人數", hint: "含您本人", required: true, min: 1, max: 10, showIf: { q: "q_att", eq: "歡喜出席" } },
-      { id: "q_kids", type: "number", label: "出席的「兒童」人數", hint: "12 歲以下，需要兒童椅請計入", required: false, min: 0, max: 6, showIf: { q: "q_att", eq: "歡喜出席" } },
-      { id: "q_veg", type: "number", label: "是否準備素食？需要幾份呢？", hint: "含在上述人數內", required: false, min: 0, max: 10, showIf: { q: "q_att", eq: "歡喜出席" } },
+      { id: "q_adults", type: "number", label: "出席的「成人」人數", hint: "含您本人", required: true, min: 1, max: 10 },
+      { id: "q_kids", type: "number", label: "出席的「兒童」人數", hint: "12 歲以下，需要兒童椅請計入", required: false, min: 0, max: 6 },
+      { id: "q_veg", type: "number", label: "是否準備素食？需要幾份呢？", hint: "含在上述人數內", required: false, min: 0, max: 10 },
       { id: "q_address", type: "longtext", label: "請提供您的收件資料，讓我們寄喜帖給您", hint: "收件人 / 地址 / 電話", required: false },
       { id: "q_msg", type: "longtext", label: "希望您給我們一些祝福....", hint: "寫下您的祝福", required: false }
     ]
@@ -273,17 +262,8 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
   function renderForm() {
     var box = $("qs");
     box.textContent = "";
-    cfg.questions.forEach(function (q) { if (isVisible(q)) box.appendChild(renderQ(q)); });
+    cfg.questions.forEach(function (q) { box.appendChild(renderQ(q)); });
   }
-
-  function isVisible(q, depth) {
-    depth = depth || 0;
-    if (!q.showIf || depth > 8) return true;
-    var par = cfg.questions.find(function (x) { return x.id === q.showIf.q; });
-    if (!par) return true;
-    return isVisible(par, depth + 1) && ans[par.id] === q.showIf.eq;
-  }
-  function hasDeps(id) { return cfg.questions.some(function (x) { return x.showIf && x.showIf.q === id; }); }
 
   function renderQ(q) {
     var wrap = h("div", { class: "field", id: "f-" + q.id });
@@ -323,10 +303,7 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
       q.options.forEach(function (o, i) {
         var ci = h("input", { type: "radio", name: "q-" + q.id, id: "q-" + q.id + "-" + i, value: o });
         ci.checked = ans[q.id] === o;
-        ci.addEventListener("change", function () {
-          ans[q.id] = o;
-          if (hasDeps(q.id)) renderForm();
-        });
+        ci.addEventListener("change", function () { ans[q.id] = o; });
         g.appendChild(h("label", { class: "choice" }, ci, h("span", { text: o })));
       });
       wrap.appendChild(g);
@@ -391,10 +368,8 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
     $("c-names").textContent = e.names;
     $("c-lead").textContent = e.lead;
     
-    // 這裡補上載入封面照片的邏輯
     var img = $("cover-img");
     if (c.coverId) { img.src = blobUrl(c.coverId); img.hidden = false; $("cover").classList.add("has-img"); }
-    else { img.hidden = true; img.removeAttribute("src"); $("cover").classList.remove("has-img"); }
 
     var info = $("info");
     info.textContent = "";
@@ -438,7 +413,6 @@ input::placeholder, textarea::placeholder { color: var(--muted); opacity: 0.8; }
     var qs = cfg.questions;
     for (var i = 0; i < qs.length; i++) {
       var q = qs[i];
-      if (!isVisible(q)) continue;
       var v = ans[q.id];
       if (q.type === "number" && typeof v !== "number") v = q.min;
       if (typeof v === "string") v = v.trim();
